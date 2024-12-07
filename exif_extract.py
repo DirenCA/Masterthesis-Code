@@ -5,20 +5,23 @@ from pathlib import Path
 import shlex
 
 # ------Variablen------
-url = r"C:\Users\Diren\Nextcloud\HTW\4.Semester-Masterarbeit\Masterarbeit\Code\TestBilder\karton.jpg"
-picture_name = Path(url).stem  # Quelle: https://stackoverflow.com/questions/678236/how-do-i-get-the-filename-without-the-extension-from-a-path-in-python
-output_path = f"C:/Users/Diren/Nextcloud/HTW/4.Semester-Masterarbeit/Masterarbeit/Code/Tiefenkarten/{picture_name}_DepthMap.tiff"
+url = r"C:\Users\Diren\Nextcloud\HTW\4.Semester-Masterarbeit\Masterarbeit\Code\TestBilder\20241207_171339.jpg"  # maybe change the way we add the url in the future -> make it easier to use other images
+picture_name = Path(
+    url).stem  # Quelle: https://stackoverflow.com/questions/678236/how-do-i-get-the-filename-without-the-extension-from-a-path-in-python
+output_path = f"C:/Users/Diren/Nextcloud/HTW/4.Semester-Masterarbeit/Masterarbeit/Code/Tiefenkarten/{picture_name}_DepthMap.tiff"  # this will be the same for every picture
+
 
 # ------Funktionen------
 
 # we will use this function to extract all the metadata from the picture(url) that is inserted
-def extract_metadata(url: str):
+def extract_metadata(url:str):
     with ExifToolHelper() as et:
         for d in et.get_metadata(f"{url}"):
             for k, v in d.items():
                 print(f"Dict: {k} = {v}")
 
-def transform_jpeg_to_depthmap(url):
+
+def transform_jpeg_to_depthmap(url:str):
     # Use ExifTool
     with ExifTool() as et:
         et.execute("-b", "-DepthMapTiff", url,
@@ -33,4 +36,7 @@ def transform_jpeg_to_depthmap(url):
     else:
         print("Keine Tiefenkarte gefunden oder extrahiert.")
 
-# ------Aufruf Funktionen------
+
+# ------Aufruf von Funktionen------
+
+transform_jpeg_to_depthmap(url)
