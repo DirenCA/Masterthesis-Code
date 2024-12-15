@@ -5,7 +5,7 @@ from pathlib import Path
 import shlex
 
 # ------Variablen------
-url = r"C:\Users\Diren\Nextcloud\HTW\4.Semester-Masterarbeit\Masterarbeit\Code\TestBilder\20241207_171339.jpg"  # maybe change the way we add the url in the future -> make it easier to use other images
+url = r"C:\Users\Diren\Nextcloud\HTW\4.Semester-Masterarbeit\Masterarbeit\Code\TestBilder\20241214_125244_staerke0.jpg"  # maybe change the way we add the url in the future -> make it easier to use other images
 picture_name = Path(
     url).stem  # Quelle: https://stackoverflow.com/questions/678236/how-do-i-get-the-filename-without-the-extension-from-a-path-in-python
 output_path = f"C:/Users/Diren/Nextcloud/HTW/4.Semester-Masterarbeit/Masterarbeit/Code/Tiefenkarten/{picture_name}_DepthMap.tiff"  # this will be the same for every picture
