@@ -40,26 +40,22 @@ depth_o3d = o3d.geometry.Image(depth_array)
 #     rgbd_image,
 #     intrinsic # it seems that I need the camera intrinsic
 # )    return pcd
-
-
-
+#
 # Create RGBD image
 
-
+# rgbd = o3d.geometry.RGBDImage.create_from_color_and_depth(rgb_o3d, depth_o3d)  # Quelle:https://www.open3d.org/docs/latest/python_api/open3d.geometry.RGBDImage.html und https://stackoverflow.com/questions/63587617/how-to-create-a-rgbd-image-from-numpy-rgb-array-and-depth-array
 #
-rgbd = o3d.geometry.RGBDImage.create_from_color_and_depth(rgb_o3d, depth_o3d)  # Quelle:https://www.open3d.org/docs/latest/python_api/open3d.geometry.RGBDImage.html und https://stackoverflow.com/questions/63587617/how-to-create-a-rgbd-image-from-numpy-rgb-array-and-depth-array
-
-intrinsic = o3d.camera.PinholeCameraIntrinsic(dm_width, dm_height,
-                                              mtx[0][0],  # fx
-                                              mtx[1][1],  # fy
-                                              mtx[0][2],  # cx
-                                              mtx[1][2])  # cy
-
-point_cloud = o3d.geometry.PointCloud.create_from_rgbd_image(rgbd, intrinsic)
-
-o3d.visualization.draw_geometries([point_cloud])
-
-
+# intrinsic = o3d.camera.PinholeCameraIntrinsic(dm_width, dm_height,
+#                                               mtx[0][0],  # fx
+#                                               mtx[1][1],  # fy
+#                                               mtx[0][2],  # cx
+#                                               mtx[1][2])  # cy
+#
+# point_cloud = o3d.geometry.PointCloud.create_from_rgbd_image(rgbd, intrinsic)
+#
+# o3d.visualization.draw_geometries([point_cloud])
+#
+#
 # pcd = o3d.geometry.PointCloud.create_from_rgbd_image(
 #     rgbd,
 #     o3d.camera.PinholeCameraIntrinsic(
@@ -67,3 +63,4 @@ o3d.visualization.draw_geometries([point_cloud])
 # # Flip it, otherwise the pointcloud will be upside down
 # pcd.transform([[1, 0, 0, 0], [0, -1, 0, 0], [0, 0, -1, 0], [0, 0, 0, 1]])
 # o3d.visualization.draw_geometries([pcd])
+
