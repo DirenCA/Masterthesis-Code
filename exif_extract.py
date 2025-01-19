@@ -84,7 +84,7 @@ def transform_jpeg_to_depthmap_iphone(url: str, output_dir: str = None) -> tuple
     picture_name = input_path.stem
     output_dir = Path(output_dir or "IPhoneTiefenkarten")
     #output_dir.mkdir(parents=True, exist_ok=True)  # Zielordner erstellen, falls nicht vorhanden
-    output_path = output_dir / f"{picture_name}_DepthMap.jpg"
+    output_path = output_dir / f"{picture_name}_DepthMap.png"
 
     file_exists = pathlib.Path.exists(output_path)
     print(file_exists)
