@@ -4,54 +4,86 @@ from PIL import Image, ImageOps
 import matplotlib.pyplot as plt
 import numpy as np
 import open3d as o3d
-from camera_intrinsic import mtx
 
-# ------------------------Variablen------------------------
-depth_image_url = r"C:\Users\Diren\Nextcloud\HTW\4.Semester-Masterarbeit\Masterarbeit\Code\IphoneTestBilder\testi2.jpg"
-rgb_image_url = r"C:\Users\Diren\Nextcloud\HTW\4.Semester-Masterarbeit\Masterarbeit\Code\TestBilder\20241214_125237_staerke7.jpg"
+# from PIL import Image
+# im = Image.open(r"C:\Users\Diren\Nextcloud\DepthData-D0A666D9-65B4-4E3C-A73A-30D0A8B714BE.tiff")
+# #im.show()
+#
+# lidar_iphone = np.array(im)
+#
+#
+# # plotting the depthmap
+# plt.imshow(lidar_iphone)
+# plt.colorbar(label="Depth Value")
+# plt.title("DepthMapIPhone")
+# plt.ylabel("Height")
+# plt.xlabel("Width")
+# plt.show()
+#
+#
+#
+#
+# # Konvertiere die Bilddaten in ein NumPy-Array
+# im_array = np.array(im)
+#
+# # Gib den Datentyp der Pixel aus
+# print(f"Datentyp: {im_array.dtype}")
+# print(f"Shape: {im_array.shape}")
 
-depth_im = Image.open(depth_image_url)  # Quelle: https://stackoverflow.com/a/67346474
-dm_width, dm_height = depth_im.size  # width and height of depthmap image. we need to resize the rgb image later to this size to combine depth map and RGB image and create a RGBD image.
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+# # CSV-Datei einlesen
+# df = pd.read_csv(r"C:\Users\Diren\Nextcloud\depth_data.csv", delimiter=",")
+#
+# # X, Y und Depth-Werte extrahieren
+# x = df["X"].to_numpy()
+# y = df["Y"].to_numpy()
+# depth = df["Depth(meters)"].to_numpy()
+#
+# # Maximale Dimensionen bestimmen
+# width = int(x.max() + 1)  # Maximaler X-Wert bestimmt die Breite
+# height = int(y.max() + 1)  # Maximaler Y-Wert bestimmt die Höhe
+#
+# # Leeres 2D-Array erstellen
+# depth_map = np.zeros((height, width), dtype=np.float32)
+#
+# # Depth-Werte in das Array eintragen
+# depth_map[y.astype(int), x.astype(int)] = depth
+
+import tifffile as tiff
+import numpy as np
+import cv2
 
 
-#---Iphone---
+# TIFF-Datei laden (keine Skalierung, reine Werte!)
+depth_array = tiff.imread(r"C:\Users\Diren\Nextcloud\DepthMap Kopie.tiff")
 
-uurl = r"C:\Users\Diren\Nextcloud\HTW\4.Semester-Masterarbeit\Masterarbeit\Code\IphoneTestBilder\testi2.jpg"
-depth_im = Image.open(uurl)
+depth_array = cv2.cvtColor(depth_array, cv2.COLOR_RGB2GRAY)
 
-depth_im = Image.open(depth_image_url)  # Quelle: https://stackoverflow.com/a/67346474
-dm_width, dm_height = depth_im.size  # width and height of depthmap image
 
-depth_array = np.array(depth_im)  # getting the depthmap as a numpy array
+#depth_array = np.array(depth_array)
+print(depth_array.shape)
 
-# plotting the depthmap
-plt.imshow(depth_array)
-plt.colorbar(label="Depth Value")
-plt.title("DepthMap")
-plt.ylabel("Height")
+# Datentyp und Wertebereich prüfen
+print(f"Datentyp: {depth_array.dtype}")  # Sollte float16 oder float32 sein
+print(f"Shape: {depth_array.shape}")  # Erwartete Bildgröße (Höhe, Breite)
+print(f"Minimale Tiefe: {np.min(depth_array)} Meter")
+print(f"Maximale Tiefe: {np.max(depth_array)} Meter")
+
+
+
+
+
+# Tiefenkarte plotten
+plt.imshow(depth_array, cmap="viridis")
+plt.colorbar(label="Depth (meters)")
+plt.title("Depth Map (iPhone)")
 plt.xlabel("Width")
+plt.ylabel("Height")
 plt.show()
-
-depth_o3d = o3d.geometry.Image(depth_array)
-
-# Intrinsische Kameraparameter (angepasst an Ihre Kamera)
-intrinsic = o3d.camera.PinholeCameraIntrinsic(
-    width=depth_array.shape[1],  # Bildbreite
-    height=depth_array.shape[0],  # Bildhöhe
-    fx=500,  # Brennweite in x-Richtung
-    fy=500,  # Brennweite in y-Richtung
-    cx=depth_array.shape[1] / 2,  # Optische Achse in x-Richtung (Bildmitte)
-    cy=depth_array.shape[0] / 2   # Optische Achse in y-Richtung (Bildmitte)
-)
-
-
-depth_data_uint16 = (depth_array.astype(np.uint16)) #Quelle: https://stackoverflow.com/questions/73067231/how-to-convert-uint8-image-to-uint16-python
-depth_uint16_o3d = o3d.geometry.Image(depth_data_uint16)
-
-# Erstelle eine Point Cloud aus dem Tiefenbild
-pcd = o3d.geometry.PointCloud.create_from_depth_image(
-    depth_uint16_o3d,
-    intrinsic
-)
-
-o3d.visualization.draw_geometries([pcd])
