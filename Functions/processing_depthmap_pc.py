@@ -23,7 +23,7 @@ def extrude_pcd(pcd, visualize=True):
     # Punkte in Z-Richtung erweitern
 
     for x, y, z in pcd_object_array:
-        # Falls der Punkt zu tief liegt, berechne eine Korrektur
+        # Falls der Punkt zu tief liegt, Korrektur berechnen
 
         current_z = z
         while current_z < max_z_object:

@@ -12,7 +12,7 @@ def compute_voxel_volume(pcd, voxel_size, visualize=True):
     voxel_volumen_ml = voxel_volumen_m3 * 1_000_000 #Umrechnung in cm³
     print(f"Geschätztes Volumen der Punktwolke: {voxel_volumen_ml:.2f} ml")
 
-    # Optional: Voxel-Visualisierung
+    # Optional: Visualisierung
     if visualize:
         o3d.visualization.draw_geometries([voxel_grid], window_name="Voxel-Visualisierung")
 
@@ -29,15 +29,15 @@ def compute_convex_hull_volume(pcd, visualize=True):
 
     # Volumen der konvexen Hülle berechnen
     volume = hull_mesh.get_volume()
-    volume_ml = volume * 1_000_000  # Umrechnung in cm³
+    volume_cm = volume * 1_000_000  # Umrechnung in cm³
 
-    print(f"Geschätztes Volumen der konvexen Hülle: {volume_ml:.2f} ml")
+    print(f"Geschätztes Volumen der konvexen Hülle: {volume_cm:.2f} ml")
 
-    # Optionale Visualisierung
+    # Optional: Visualisierung
     if visualize:
         o3d.visualization.draw_geometries([pcd, hull_ls], window_name="Konvexe Hülle")
 
-    return volume_ml
+    return volume_cm
 
 
 def compute_oriented_bounding_box_volume(pcd, visualize=True):
@@ -52,7 +52,7 @@ def compute_oriented_bounding_box_volume(pcd, visualize=True):
 
     print(f"Geschätztes Volumen der OBB: {obb_volume_cm3:.2f} cm³")
 
-    # Optional: Visualisierung der OBB
+    # Optional: Visualisierung
     if visualize:
         o3d.visualization.draw_geometries([pcd, oriented_bb], window_name="Oriented Bounding Box")
 
@@ -60,6 +60,7 @@ def compute_oriented_bounding_box_volume(pcd, visualize=True):
 
 
 def compute_alpha_shape_volume(pcd, alpha, visualize=True):
+    #Quelle: https://stackoverflow.com/questions/1406029/how-to-calculate-the-volume-of-a-3d-mesh-object-the-surface-of-which-is-made-up
 
     # Normalenberechnung
     nn_distance = np.mean(pcd.compute_nearest_neighbor_distance())
@@ -71,13 +72,11 @@ def compute_alpha_shape_volume(pcd, alpha, visualize=True):
 
     # 2. Alpha Shape Berechnung
 
-    print(f"Erstelle Alpha Shape mit alpha={alpha:.3f}...")
     alpha_shape = o3d.geometry.TriangleMesh.create_from_point_cloud_alpha_shape(pcd, alpha)
     alpha_shape.compute_vertex_normals()
 
     # 3. Volumenberechnung mit Tetrahedral Decomposition
     def compute_mesh_volume(mesh):
-        """ Berechnet das Volumen eines Meshs basierend auf Tetrahedral Decomposition. """
         vertices = np.asarray(mesh.vertices)
         triangles = np.asarray(mesh.triangles)
 
@@ -92,7 +91,7 @@ def compute_alpha_shape_volume(pcd, alpha, visualize=True):
     alpha_volume_cm3 = compute_mesh_volume(alpha_shape) * 1_000_000  # Umrechnung in cm³
     print(f"Volumen: {alpha_volume_cm3:.2f} cm³")
 
-    # 4. Visualisierung (falls gewünscht)
+    # # Optional: Visualisierung
     if visualize:
         o3d.visualization.draw_geometries([alpha_shape], mesh_show_back_face=True, window_name="Alpha Shape")
 
