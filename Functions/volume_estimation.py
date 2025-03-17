@@ -42,7 +42,7 @@ def compute_convex_hull_volume(pcd, visualize=True):
 
 def compute_oriented_bounding_box_volume(pcd, visualize=True):
     # Oriented Bounding Box (OBB) berechnen
-    oriented_bb = pcd.get_oriented_bounding_box()
+    oriented_bb = pcd.get_minimal_oriented_bounding_box()
     oriented_bb.color = (0, 1, 0)  # Grün einfärben
 
     # Volumenberechnung der OBB

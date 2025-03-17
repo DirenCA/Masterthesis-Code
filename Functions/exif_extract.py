@@ -23,16 +23,6 @@ def extract_metadata(url:str):
 
 
 def transform_jpeg_to_depthmap_samsungs20(url: str, output_dir: str = None) -> tuple:
-    """
-        Wandelt ein JPEG-Bild in eine Tiefenkarte um und speichert diese als TIFF-Datei.
-
-        Args:
-            url (str): Pfad zur Eingabedatei (JPEG).
-            output_dir (str, optional): Zielverzeichnis für die Tiefenkarte. Standardmäßig wird ein Ordner "Tiefenkarten" im aktuellen Arbeitsverzeichnis verwendet.
-
-        Returns:
-            tuple: Ursprünglicher Bildpfad und Pfad zur gespeicherten Tiefenkarte.
-    """
 
     #picture_name = Path(url).stem  # Quelle: https://stackoverflow.com/questions/678236/how-do-i-get-the-filename-without-the-extension-from-a-path-in-python
     #output_path = f"C:/Users/Diren/Nextcloud/HTW/4.Semester-Masterarbeit/Masterarbeit/Code/Tiefenkarten/{picture_name}_DepthMap.tiff"  # this will be the same for every picture
