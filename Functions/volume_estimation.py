@@ -57,7 +57,7 @@ def compute_oriented_bounding_box_volume(pcd, visualize=True):
         o3d.visualization.draw_geometries([pcd, oriented_bb], window_name="Oriented Bounding Box")
 
     return obb_volume_cm3
-
+#test
 
 def compute_alpha_shape_volume(pcd, alpha, visualize=True):
     #Quelle: https://stackoverflow.com/questions/1406029/how-to-calculate-the-volume-of-a-3d-mesh-object-the-surface-of-which-is-made-up
