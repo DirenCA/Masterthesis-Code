@@ -7,9 +7,8 @@ from pathlib import Path
 import shlex
 
 # ------Variablen------
-#url_iphone = r"C:\Users\Diren\Nextcloud\HTW\4.Semester-Masterarbeit\Masterarbeit\Code\TestBilder\ja.jpg"  # maybe change the way we add the url in the future -> make it easier to use other images
 # picture_name_iphone = Path(url).stem  # Quelle: https://stackoverflow.com/questions/678236/how-do-i-get-the-filename-without-the-extension-from-a-path-in-python
-# output_path_iphone = f"C:/Users/Diren/Nextcloud/HTW/4.Semester-Masterarbeit/Masterarbeit/Code/Tiefenkarten/{picture_name}_DepthMap.tiff"  # this will be the same for every picture
+# output_path_iphone = f"C:/Users/Diren/Tiefenkarten/{picture_name}_DepthMap.tiff"  # this will be the same for every picture
 
 
 # ------Funktionen------
@@ -25,7 +24,7 @@ def extract_metadata(url:str):
 def transform_jpeg_to_depthmap_samsungs20(url: str, output_dir: str = None) -> tuple:
 
     #picture_name = Path(url).stem  # Quelle: https://stackoverflow.com/questions/678236/how-do-i-get-the-filename-without-the-extension-from-a-path-in-python
-    #output_path = f"C:/Users/Diren/Nextcloud/HTW/4.Semester-Masterarbeit/Masterarbeit/Code/Tiefenkarten/{picture_name}_DepthMap.tiff"  # this will be the same for every picture
+    #output_path = f"C:/Users/Diren/Code/Tiefenkarten/{picture_name}_DepthMap.tiff"  # this will be the same for every picture
 
     # Pfade und Verzeichnisse vorbereiten
     input_path = Path(url)
